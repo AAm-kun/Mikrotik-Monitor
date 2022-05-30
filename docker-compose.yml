@@ -1,0 +1,38 @@
+---
+version: '3'
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+    
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/nini/log/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+  snmp_exporter:
+    image: prom/snmp-exporter:latest
+    container_name: snmp
+    ports:
+      - "9116:9116"
+    volumes:
+      - /home/nini/log/snmp:/etc/snmp_exporter
+    restart: unless-stopped
