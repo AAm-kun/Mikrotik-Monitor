@@ -1,0 +1,41 @@
+modules:
+  mikrotik:
+    walk:
+      - interfaces
+      - mtxrQueueSimpleTable
+      - hrProcessorLoad
+      - hrSystemUptime
+      - hrSystemDate
+      - hrMemorySize
+      - hrStorageTable
+      - sysUpTime      
+      - sysDescr
+      - ifMIB  
+      - mikrotik
+      - host
+      - laIndex
+    lookups:
+      - source_indexes: [ifIndex]
+        lookup: ifAlias
+      - source_indexes: [ifIndex]
+        lookup: ifDescr
+      - source_indexes: [ifIndex]
+        lookup: 1.3.6.1.2.1.31.1.1.1.1
+      - source_indexes: [ifIndex]
+        lookup: ifName
+      - source_indexes: [mtxrInterfaceStatsIndex]
+        lookup: ifName
+      - source_indexes: [hrStorageIndex]
+        lookup: hrStorageDescr
+      - source_indexes: [laIndex]
+        lookup: laNames
+        drop_source_indexes: true  
+    overrides:
+      ifAlias:
+        ignore: true # Lookup metric
+      ifDescr:
+        ignore: true # Lookup metric
+      ifName:
+        ignore: true # Lookup metric
+      ifType:
+        type: EnumAsInfo
