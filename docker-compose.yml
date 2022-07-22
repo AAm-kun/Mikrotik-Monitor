@@ -14,7 +14,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /home/nini/log/prometheus:/etc/prometheus
+      - /home/ubuntu/log/prometheus:/etc/prometheus
       - prometheus-data:/prometheus
     restart: unless-stopped
     command:
@@ -34,5 +34,5 @@ services:
     ports:
       - "9116:9116"
     volumes:
-      - /home/nini/log/snmp:/etc/snmp_exporter
+      - /home/ubuntu/log/snmp:/etc/snmp_exporter
     restart: unless-stopped
